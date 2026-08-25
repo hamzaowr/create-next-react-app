@@ -1,0 +1,13 @@
+{
+  "name": "prisma",
+  "label": "Prisma ORM",
+  "dependencies": { "@prisma/client": "^6.2.0" },
+  "devDependencies": { "prisma": "^6.2.0" },
+  "envVars": ["DATABASE_URL="],
+  "files": [
+    { "src": "files/prisma/schema.prisma", "dest": "prisma/schema.prisma" },
+    { "src": "files/lib/prisma.ts", "dest": "lib/prisma.ts" }
+  ],
+  "scripts": { "db:push": "prisma db push", "db:studio": "prisma studio", "db:generate": "prisma generate" },
+  "postInstallNote": "Set DATABASE_URL in .env.local, then run 'pnpm db:generate' and 'pnpm db:push'."
+}

@@ -1,0 +1,9 @@
+{
+  "name": "zustand",
+  "label": "Zustand",
+  "dependencies": { "zustand": "^5.0.0" },
+  "devDependencies": {},
+  "envVars": [],
+  "files": [{ "src": "files/store/example-store.ts", "dest": "store/example-store.ts" }],
+  "postInstallNote": "Example store scaffolded at store/example-store.ts — rename or delete it."
+}

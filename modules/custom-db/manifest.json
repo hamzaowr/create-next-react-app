@@ -1,0 +1,9 @@
+{
+  "name": "custom-db",
+  "label": "Custom database (Postgres via pg)",
+  "dependencies": { "pg": "^8.13.0" },
+  "devDependencies": { "@types/pg": "^8.11.0" },
+  "envVars": ["DATABASE_URL="],
+  "files": [{ "src": "files/lib/db.ts", "dest": "lib/db.ts" }],
+  "postInstallNote": "Set DATABASE_URL in .env.local. Swap 'pg' for your driver of choice if not Postgres. If you're also using Prisma, you likely don't need this raw client — Prisma manages its own connection."
+}

@@ -1,0 +1,12 @@
+{
+  "name": "tanstack-query",
+  "label": "TanStack Query",
+  "dependencies": { "@tanstack/react-query": "^5.62.0" },
+  "devDependencies": {},
+  "envVars": [],
+  "files": [
+    { "src": "files/lib/query-client.ts", "dest": "lib/query-client.ts" },
+    { "src": "files/components/query-provider.tsx", "dest": "components/query-provider.tsx" }
+  ],
+  "postInstallNote": "Wrap your root layout/App in <QueryProvider> from components/query-provider.tsx."
+}

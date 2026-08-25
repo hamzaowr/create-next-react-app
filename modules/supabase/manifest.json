@@ -1,0 +1,12 @@
+{
+  "name": "supabase",
+  "label": "Supabase",
+  "dependencies": { "@supabase/supabase-js": "^2.47.0" },
+  "devDependencies": {},
+  "envVars": [
+    "NEXT_PUBLIC_SUPABASE_URL=",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY="
+  ],
+  "files": [{ "src": "files/lib/supabase.ts", "dest": "lib/supabase.ts" }],
+  "postInstallNote": "Fill in Supabase project URL and anon key in .env.local, then import { supabase } from '@/lib/supabase'."
+}

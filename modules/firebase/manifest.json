@@ -1,0 +1,16 @@
+{
+  "name": "firebase",
+  "label": "Firebase",
+  "dependencies": { "firebase": "^11.2.0" },
+  "devDependencies": {},
+  "envVars": [
+    "NEXT_PUBLIC_FIREBASE_API_KEY=",
+    "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=",
+    "NEXT_PUBLIC_FIREBASE_PROJECT_ID=",
+    "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=",
+    "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=",
+    "NEXT_PUBLIC_FIREBASE_APP_ID="
+  ],
+  "files": [{ "src": "files/lib/firebase.ts", "dest": "lib/firebase.ts" }],
+  "postInstallNote": "Fill in Firebase config values in .env.local, then import { db, auth } from '@/lib/firebase'."
+}

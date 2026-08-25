@@ -1,0 +1,9 @@
+{
+  "name": "react-icons",
+  "label": "react-icons",
+  "dependencies": { "react-icons": "^5.4.0" },
+  "devDependencies": {},
+  "envVars": [],
+  "files": [],
+  "postInstallNote": "Import icons directly, e.g. import { FiSearch } from 'react-icons/fi'. Note: lucide-react is already in the base template for shadcn components — react-icons is there if you need something lucide doesn't have (brand icons, etc)."
+}

@@ -1,0 +1,9 @@
+{
+  "name": "better-auth",
+  "label": "better-auth",
+  "dependencies": { "better-auth": "^1.1.0" },
+  "devDependencies": {},
+  "envVars": ["BETTER_AUTH_SECRET=", "BETTER_AUTH_URL=http://localhost:3000"],
+  "files": [{ "src": "files/lib/auth.ts", "dest": "lib/auth.ts" }],
+  "postInstallNote": "See https://better-auth.com/docs for the database adapter matching your chosen backend (Prisma/Supabase/Firebase need different adapters), then wire up the API route handler."
+}
