@@ -31,12 +31,6 @@ async function main() {
         ],
       },
       {
-        type: "confirm",
-        name: "useReactIcons",
-        message: "Add react-icons?",
-        initial: false,
-      },
-      {
         type: "select",
         name: "backend",
         message: "Backend:",
@@ -72,6 +66,12 @@ async function main() {
         initial: false,
       },
       {
+        type: "confirm",
+        name: "useReactIcons",
+        message: "Add react-icons?",
+        initial: false,
+      },
+      {
         type: "select",
         name: "packageManager",
         message: "Package manager:",
@@ -88,7 +88,7 @@ async function main() {
         console.log(kleur.red("Cancelled."));
         process.exit(1);
       },
-    },
+    }
   );
 
   const projectName = targetArg || answers.projectName;
@@ -108,11 +108,7 @@ async function main() {
     answers.useReactIcons ? "react-icons" : null,
   ].filter(Boolean);
 
-  console.log(
-    kleur.cyan(
-      `\nScaffolding ${projectName} (${answers.framework}) with: ${selectedModules.join(", ") || "no extra modules"}\n`,
-    ),
-  );
+  console.log(kleur.cyan(`\nScaffolding ${projectName} (${answers.framework}) with: ${selectedModules.join(", ") || "no extra modules"}\n`));
 
   // 1. Copy base template
   await fs.copy(path.join(TEMPLATES_DIR, answers.framework), targetDir);
@@ -135,16 +131,14 @@ async function main() {
       await fs.copy(src, dest);
     }
 
-    Object.assign((pkg.dependencies ||= {}), manifest.dependencies || {});
-    Object.assign((pkg.devDependencies ||= {}), manifest.devDependencies || {});
-    if (manifest.scripts) Object.assign((pkg.scripts ||= {}), manifest.scripts);
+    Object.assign(pkg.dependencies ||= {}, manifest.dependencies || {});
+    Object.assign(pkg.devDependencies ||= {}, manifest.devDependencies || {});
+    if (manifest.scripts) Object.assign(pkg.scripts ||= {}, manifest.scripts);
 
     if (manifest.envVars?.length) {
-      envAppend +=
-        `\n# ${manifest.label}\n` + manifest.envVars.join("\n") + "\n";
+      envAppend += `\n# ${manifest.label}\n` + manifest.envVars.join("\n") + "\n";
     }
-    if (manifest.postInstallNote)
-      notes.push(`- [${manifest.label}] ${manifest.postInstallNote}`);
+    if (manifest.postInstallNote) notes.push(`- [${manifest.label}] ${manifest.postInstallNote}`);
   }
 
   await fs.writeJson(pkgPath, pkg, { spaces: 2 });
@@ -156,9 +150,7 @@ async function main() {
   console.log(kleur.green(`\nDone. Next steps:\n`));
   console.log(`  cd ${projectName}`);
   console.log(`  ${answers.packageManager} install`);
-  console.log(
-    `  ${answers.packageManager === "npm" ? "npm run dev" : `${answers.packageManager} dev`}\n`,
-  );
+  console.log(`  ${answers.packageManager === "npm" ? "npm run dev" : `${answers.packageManager} dev`}\n`);
 
   if (notes.length) {
     console.log(kleur.yellow("Module notes:"));

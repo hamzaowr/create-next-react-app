@@ -1,10 +1,8 @@
 {
-  "name": "create-next-react-app",
+  "name": "create-hamza-app",
   "version": "0.1.0",
   "description": "Scaffold Next.js or Vite+React projects with optional backend/orm/auth/state modules.",
-  "bin": {
-    "create-next-react-app": "./bin/create.js"
-  },
+  "bin": { "create-hamza-app": "./bin/create.js" },
   "type": "module",
   "dependencies": {
     "prompts": "^2.4.2",
