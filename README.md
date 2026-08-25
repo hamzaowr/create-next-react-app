@@ -1,61 +1,139 @@
 # create-next-react-app
 
-Personal scaffolding CLI. Two base templates (Next.js App Router, Vite + React), both preconfigured with Tailwind v4 and zod. shadcn/ui sets itself up automatically on first `install` via a `postinstall` hook, no manual `shadcn init` prompts. Prompts for optional modules on top: backend, ORM, auth, state, and data fetching.
+A personal scaffolding CLI for starting new Next.js or Vite + React projects without redoing the same setup every time.
 
-## Setup (one-time)
+Two base templates, both preconfigured with Tailwind v4, shadcn/ui, and zod. When you run the CLI, it walks you through a short set of prompts (backend, ORM, auth, state, icons, shadcn style) and scaffolds a new project with only what you picked, deps and env vars merged into one `package.json` and `.env.example`.
+
+## Why this exists
+
+Every new project meant reconfiguring Tailwind, shadcn, and whichever backend/ORM/auth combo that project needed, time that could go into the actual project instead. This tool does that setup once per project in under a minute, and stays flexible enough to handle the fact that not every project uses the same backend or ORM.
+
+## What you get
+
+**Both base templates include, always:**
+
+- TypeScript
+- Tailwind v4 (CSS-first config, no `tailwind.config.ts`)
+- shadcn/ui — configured automatically on first install (see below), not hand-maintained
+- zod
+- `lucide-react` (shadcn's icon set)
+
+**Next.js template (`next-base`):** App Router, `next.config.mjs`, `postcss.config.mjs`.
+
+**Vite template (`vite-base`):** Vite + React + TanStack Router (file-based routing already wired in `src/routes/`).
+
+**Optional, prompted per project:**
+| Module | Adds |
+|---|---|
+| Firebase | `lib/firebase.ts`, Firebase env vars, `firebase` dep |
+| Supabase | `lib/supabase.ts`, Supabase env vars, `@supabase/supabase-js` dep |
+| Custom database | `lib/db.ts` (raw `pg` Pool client), `DATABASE_URL` |
+| Prisma | `prisma/schema.prisma`, `lib/prisma.ts`, `db:push`/`db:studio`/`db:generate` scripts |
+| better-auth | `lib/auth.ts`, auth env vars |
+| Zustand | `store/example-store.ts` |
+| TanStack Query | `lib/query-client.ts`, `components/query-provider.tsx` |
+| react-icons | just the dependency |
+
+Backend and ORM are independent choices, e.g. custom Postgres + Prisma is a valid combination.
+
+## shadcn/ui setup
+
+Rather than shipping a hand-maintained `components.json` and `globals.css` that drift out of date, both templates run shadcn's own `init` automatically the first time you install:
+
+```
+shadcn init -y -f -d -t <next|vite> --no-monorepo
+```
+
+This is wired up as a `postinstall` script, so it fires the moment you run `pnpm install` (or `npm`/`yarn`), no manual prompts, no stale hand-copied CSS variables.
+
+You also get a style prompt when scaffolding: **Nova** (default), **Vega**, **Maia**, **Lyra**, **Mira**, **Luma**, **Sera**, or **Rhea**. Picking anything other than Nova swaps the `-d` flag for an explicit `-p <preset>` in the generated `postinstall` script.
+
+**Changing the style later**, once a project already exists:
+
+| Situation                                             | Command                                                                                                                            |
+| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Haven't customized any components yet                 | `npx shadcn@latest apply --preset <name>`                                                                                          |
+| Already customized components, want to keep that work | `npx shadcn@latest init --preset <name> --force --no-reinstall`, then update components one at a time via `npx shadcn@latest info` |
+| Just want new CSS vars/colors, not component code     | `npx shadcn@latest init --preset <name> --force --no-reinstall`                                                                    |
+
+## Setup (one-time, per machine)
 
 ```bash
-git clone <this-repo> create-next-react-app
+git clone git@github.com:hamzaowr/create-next-react-app.git
 cd create-next-react-app
 npm install
 npm link          # makes `create-next-react-app` available globally
 ```
 
+Or, once it's pushed to GitHub, skip the clone entirely and run it straight off the repo from any machine:
+
+```bash
+npx github:hamzaowr/create-next-react-app my-new-project
+```
+
+This does a shallow clone under the hood, installs the CLI's own deps, runs it, and leaves nothing behind, no permanent install, and it always uses whatever's on `main`.
+
 ## Usage
 
 ```bash
 create-next-react-app my-new-project
-# or just: create-next-react-app   (it'll prompt for a name too)
+# or just: create-next-react-app   (it'll prompt for a project name too)
 ```
 
-You'll be walked through:
-- Framework: Next.js or Vite + React
-- Backend: Firebase / Supabase / custom Postgres / none
-- Prisma? better-auth? Zustand? TanStack Query? react-icons? (all optional, independent toggles)
-- Package manager
+You'll be prompted for:
 
-It copies the base template, layers in the files/deps/env-vars for whatever you picked, merges everything into one `package.json` and `.env.example`, then prints next steps.
+1. Framework — Next.js or Vite + React
+2. Backend — Firebase / Supabase / custom Postgres / none
+3. Prisma? better-auth? Zustand? TanStack Query? react-icons? — independent yes/no toggles
+4. shadcn/ui style — Nova through Rhea
+5. Package manager — pnpm / npm / yarn
 
-Once you `cd` in and run install, two things happen automatically:
-1. Your package manager installs everything (all base deps pinned to `latest`, so you always get current major versions).
-2. `postinstall` runs `shadcn init -y -f -d -t next|vite --no-monorepo`, which generates `components.json` and the full `globals.css`/`index.css` using shadcn's own current defaults (Base UI primitives, "nova" style, CSS vars, animations, the whole thing), same as if you'd run `shadcn init` by hand and accepted the defaults, just without the prompts.
+Then:
 
-**Heads up — I couldn't fully verify this last step end-to-end.** My sandbox blocks outbound requests to `ui.shadcn.com` (not on its allowed domain list), so while I confirmed `npm install` correctly triggers the `postinstall` hook, I couldn't confirm the actual shadcn network fetch completes cleanly. The command is built directly from shadcn's official CLI docs (`-y` skip confirm, `-f` force overwrite, `-d` use defaults, `-t` template, `--no-monorepo` to avoid an interactive prompt neither `-y` nor `-d` suppresses), so it should be right, but run `npm install` on a real project once after pulling this and check `components.json` + `globals.css` actually land. If `-d`'s default preset ever changes or breaks, swap in an explicit `-p <preset-name>` (see `npx shadcn@latest init --help` for current preset names).
-
-## Structure
-
-```
-templates/
-  next-base/     Next.js App Router + Tailwind v4 + zod (shadcn added via postinstall)
-  vite-base/     Vite + React + TanStack Router + Tailwind v4 + zod (shadcn added via postinstall)
-modules/
-  firebase/        lib/firebase.ts + env vars + firebase dep
-  supabase/        lib/supabase.ts + env vars + supabase-js dep
-  custom-db/       lib/db.ts (raw pg Pool) + DATABASE_URL
-  prisma/          prisma/schema.prisma + lib/prisma.ts + db:* scripts
-  better-auth/     lib/auth.ts + env vars
-  zustand/         store/example-store.ts
-  tanstack-query/  lib/query-client.ts + components/query-provider.tsx
-  react-icons/     no files, just adds the dependency
-bin/create.js      the interactive CLI
+```bash
+cd my-new-project
+pnpm install     # installs deps AND runs shadcn init via postinstall
+pnpm dev
 ```
 
-## Adding a new module later
+## Project structure
 
-Drop a new folder in `modules/` with a `manifest.json` (see any existing one for the shape: `dependencies`, `devDependencies`, `envVars`, `files`, optional `scripts`, `postInstallNote`) plus the files it references. Add it to the relevant prompt in `bin/create.js`. No other changes needed, the copy/merge logic is generic.
+```
+create-next-react-app/
+├── bin/
+│   └── create.js          the interactive CLI
+├── templates/
+│   ├── next-base/         Next.js App Router + Tailwind v4 + zod
+│   └── vite-base/         Vite + React + TanStack Router + Tailwind v4 + zod
+└── modules/
+    ├── firebase/
+    ├── supabase/
+    ├── custom-db/
+    ├── prisma/
+    ├── better-auth/
+    ├── zustand/
+    ├── tanstack-query/
+    └── react-icons/
+```
+
+Each module folder has:
+
+- `manifest.json` — `dependencies`, `devDependencies`, `envVars`, `files` (source → destination pairs), optional `scripts`, optional `postInstallNote`
+- the actual files it copies in (e.g. `files/lib/firebase.ts`)
+
+`bin/create.js` reads the manifest for every module you selected, copies its files into the new project, and merges its deps/scripts/env vars into the project's `package.json`/`.env.example`.
+
+## Adding a new module
+
+1. Create `modules/<name>/manifest.json` and whatever files it references under `modules/<name>/files/`.
+2. Add a prompt for it in `bin/create.js` (a `confirm` for a simple toggle, or add a `value` to the `backend` select if it's another backend option).
+3. Include it in the `selectedModules` array in `bin/create.js`.
+
+No changes needed to the copy/merge logic itself, it's generic and just reads whatever manifest it's given.
 
 ## Notes
 
-- Templates ship without `node_modules` (as templates should) — the CLI's own deps (`prompts`, `fs-extra`, `kleur`) are separate from what gets scaffolded into your project.
-- All base-template dependency versions are set to `"latest"` so every scaffold pulls current majors. If a breaking release ever causes issues, pin the specific package back down in that template's `package.json`.
-- `custom-db`'s `lib/db.ts` is a raw `pg` pool, skip it if you're using Prisma, since Prisma manages its own connection.
+- Templates ship without `node_modules`, as templates should. The CLI's own dependencies (`prompts`, `fs-extra`, `kleur`) are separate from what gets scaffolded into your project.
+- All base-template dependency versions are set to `"latest"`, so every scaffold pulls current majors. If a future breaking release causes problems, pin that specific package back down in the relevant template's `package.json`.
+- `custom-db`'s `lib/db.ts` is a raw `pg` pool. Skip it if you're also using Prisma, since Prisma manages its own connection.
+- The `shadcn init` step needs real network access to `ui.shadcn.com`. If it ever fails silently in a restricted environment (CI, sandboxed containers), that's the likely cause.
