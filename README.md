@@ -19,7 +19,6 @@ create-next-react-app my-new-project
 ```
 
 You'll be walked through:
-
 - Framework: Next.js or Vite + React
 - Backend: Firebase / Supabase / custom Postgres / none
 - Prisma? better-auth? Zustand? TanStack Query? react-icons? (all optional, independent toggles)
@@ -28,7 +27,6 @@ You'll be walked through:
 It copies the base template, layers in the files/deps/env-vars for whatever you picked, merges everything into one `package.json` and `.env.example`, then prints next steps.
 
 Once you `cd` in and run install, two things happen automatically:
-
 1. Your package manager installs everything (all base deps pinned to `latest`, so you always get current major versions).
 2. `postinstall` runs `shadcn init -y -f -d -t next|vite --no-monorepo`, which generates `components.json` and the full `globals.css`/`index.css` using shadcn's own current defaults (Base UI primitives, "nova" style, CSS vars, animations, the whole thing), same as if you'd run `shadcn init` by hand and accepted the defaults, just without the prompts.
 

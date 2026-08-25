@@ -73,6 +73,22 @@ async function main() {
       },
       {
         type: "select",
+        name: "shadcnStyle",
+        message: "shadcn/ui style:",
+        choices: [
+          { title: "Nova — classic shadcn look, balanced density (default)", value: "nova" },
+          { title: "Vega — tighter padding, compact layouts", value: "vega" },
+          { title: "Maia — soft and rounded, generous spacing", value: "maia" },
+          { title: "Lyra — sharp, boxy, zero radius, pairs with mono fonts", value: "lyra" },
+          { title: "Mira — dense, built for data-heavy UIs", value: "mira" },
+          { title: "Luma — softer, more fluid", value: "luma" },
+          { title: "Sera — editorial, typographic", value: "sera" },
+          { title: "Rhea", value: "rhea" },
+        ],
+        initial: 0,
+      },
+      {
+        type: "select",
         name: "packageManager",
         message: "Package manager:",
         choices: [
@@ -115,6 +131,15 @@ async function main() {
   const pkgPath = path.join(targetDir, "package.json");
   const pkg = await fs.readJson(pkgPath);
   pkg.name = projectName;
+
+  // Swap the template's default `-d` (shadcn defaults) for an explicit
+  // `-p <preset>` if the user picked something other than nova.
+  if (pkg.scripts?.postinstall && answers.shadcnStyle && answers.shadcnStyle !== "nova") {
+    pkg.scripts.postinstall = pkg.scripts.postinstall.replace(
+      "-d ",
+      `-p ${answers.shadcnStyle} `
+    );
+  }
 
   let envAppend = "";
   const notes = [];
