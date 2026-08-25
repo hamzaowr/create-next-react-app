@@ -1,24 +1,25 @@
-# create-hamza-app
+# create-next-react-app
 
 Personal scaffolding CLI. Two base templates (Next.js App Router, Vite + React), both preconfigured with Tailwind v4 and zod. shadcn/ui sets itself up automatically on first `install` via a `postinstall` hook, no manual `shadcn init` prompts. Prompts for optional modules on top: backend, ORM, auth, state, and data fetching.
 
 ## Setup (one-time)
 
 ```bash
-git clone <this-repo> create-hamza-app
-cd create-hamza-app
+git clone <this-repo> create-next-react-app
+cd create-next-react-app
 npm install
-npm link          # makes `create-hamza-app` available globally
+npm link          # makes `create-next-react-app` available globally
 ```
 
 ## Usage
 
 ```bash
-create-hamza-app my-new-project
-# or just: create-hamza-app   (it'll prompt for a name too)
+create-next-react-app my-new-project
+# or just: create-next-react-app   (it'll prompt for a name too)
 ```
 
 You'll be walked through:
+
 - Framework: Next.js or Vite + React
 - Backend: Firebase / Supabase / custom Postgres / none
 - Prisma? better-auth? Zustand? TanStack Query? react-icons? (all optional, independent toggles)
@@ -27,6 +28,7 @@ You'll be walked through:
 It copies the base template, layers in the files/deps/env-vars for whatever you picked, merges everything into one `package.json` and `.env.example`, then prints next steps.
 
 Once you `cd` in and run install, two things happen automatically:
+
 1. Your package manager installs everything (all base deps pinned to `latest`, so you always get current major versions).
 2. `postinstall` runs `shadcn init -y -f -d -t next|vite --no-monorepo`, which generates `components.json` and the full `globals.css`/`index.css` using shadcn's own current defaults (Base UI primitives, "nova" style, CSS vars, animations, the whole thing), same as if you'd run `shadcn init` by hand and accepted the defaults, just without the prompts.
 

@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "App",
-  description: "Scaffolded with create-hamza-app",
+  description: "Scaffolded with create-next-react-app",
 };
 
 export default function RootLayout({
