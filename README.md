@@ -38,15 +38,14 @@ Backend and ORM are independent choices, e.g. custom Postgres + Prisma is a vali
 
 ## shadcn/ui setup
 
-Rather than shipping a hand-maintained `components.json` and `globals.css` that drift out of date, both templates run shadcn's own `init` automatically the first time you install:
+Rather than shipping a hand-maintained `components.json` and `globals.css` that drift out of date, the CLI handles shadcn setup for you automatically.
 
-```
-shadcn init -y -f -d -t <next|vite> --no-monorepo
-```
+After scaffolding your files, the CLI will:
 
-This is wired up as a `postinstall` script, so it fires the moment you run `pnpm install` (or `npm`/`yarn`), no manual prompts, no stale hand-copied CSS variables.
+1. Run your chosen package manager's `install` command.
+2. Immediately and **interactively** run `npx shadcn@latest init`.
 
-You also get a style prompt when scaffolding: **Nova** (default), **Vega**, **Maia**, **Lyra**, **Mira**, **Luma**, **Sera**, or **Rhea**. Picking anything other than Nova swaps the `-d` flag for an explicit `-p <preset>` in the generated `postinstall` script.
+It automatically passes your chosen style preset (Nova, Vega, Maia, etc.) to the init command so you aren't asked redundant questions, but you will still get shadcn's native interactive prompts for any other configuration (like default color themes).
 
 **Changing the style later**, once a project already exists:
 
@@ -92,7 +91,6 @@ Then:
 
 ```bash
 cd my-new-project
-pnpm install     # installs deps AND runs shadcn init via postinstall
 pnpm dev
 ```
 
