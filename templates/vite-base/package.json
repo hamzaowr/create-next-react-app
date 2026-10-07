@@ -7,8 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "lint": "eslint .",
-    "postinstall": "shadcn init -y -f -d -t vite --no-monorepo"
+    "lint": "eslint ."
   },
   "dependencies": {
     "react": "latest",
@@ -18,7 +17,8 @@
     "clsx": "latest",
     "tailwind-merge": "latest",
     "class-variance-authority": "latest",
-    "lucide-react": "latest"
+    "lucide-react": "latest",
+    "shadcn": "latest"
   },
   "devDependencies": {
     "@tanstack/router-plugin": "latest",
@@ -29,7 +29,6 @@
     "vite": "latest",
     "tailwindcss": "latest",
     "@tailwindcss/vite": "latest",
-    "eslint": "latest",
-    "shadcn": "latest"
+    "eslint": "latest"
   }
 }

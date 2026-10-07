@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint .",
-    "postinstall": "shadcn init -y -f -d -t next --no-monorepo"
+    "lint": "eslint ."
   },
   "dependencies": {
     "next": "latest",
@@ -18,7 +17,8 @@
     "tailwind-merge": "latest",
     "tw-animate-css": "latest",
     "class-variance-authority": "latest",
-    "lucide-react": "latest"
+    "lucide-react": "latest",
+    "shadcn": "latest"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "latest",
@@ -28,7 +28,6 @@
     "eslint": "latest",
     "eslint-config-next": "latest",
     "tailwindcss": "latest",
-    "typescript": "latest",
-    "shadcn": "latest"
+    "typescript": "latest"
   }
 }
